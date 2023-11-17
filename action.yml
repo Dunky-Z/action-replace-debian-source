@@ -1,0 +1,54 @@
+name: "Replace debian source to ESWIN"
+description: "This Action will replace debian OS source list to ESWIN mirror"
+author: Dongdong Zhang
+branding:
+  icon: "repeat"
+  color: "green"
+runs:
+  using: "composite"
+  steps:
+    - id: replace-source-list
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          rm -rf /etc/apt/sources.list
+          system_version=$(grep -oP '(?<=VERSION_ID=\")\d+\.\d+' /etc/os-release)
+          echo "$system_version"
+          if [[ "$system_version" == "18.04" ]]; then
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic-updates main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic-updates universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic-updates multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic-backports main restricted universe multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic-security main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic-security universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu bionic-security multiverse" |  tee -a /etc/apt/sources.list
+          elif [[ "$system_version" == "20.04" ]]; then
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal-updates main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal-updates universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal-updates multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal-backports main restricted universe multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal-security main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal-security universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu focal-security multiverse" |  tee -a /etc/apt/sources.list
+          elif [[ "$system_version" == "22.04" ]]; then
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy-updates main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy-updates universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy-updates multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy-backports main restricted universe multiverse" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy-security main restricted" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy-security universe" |  tee -a /etc/apt/sources.list
+            echo "deb http://mirrors.eswincomputing.com:8084/repository/ubuntu jammy-security multiverse" |  tee -a /etc/apt/sources.list
+          fi
+        fi
+        cat /etc/apt/sources.list
+        apt update
+      shell: bash
+
